@@ -1,0 +1,31 @@
+This project is being designed for 19.4? Divine Journey 2 on Minecraft 1.12.2
+specifically, but this project is attemping to be done in pure AE2 because it's
+more fun.
+
+* Overview
+This project is attempting to make a shulker box loader for use via
+autocrafting. It puts the ingredients from a pattern into a shulker box and
+picks it up as an item to be distributed by a different system.
+
+** Background
+Originally this was made to improve a friend's system that used shulker boxes to
+"package" recipes and easily distribute the recipes to a parallel array of
+machines to process. At this point this project is more showing off than
+anything, but potentially might be used if it's simple enough.
+
+* Current Attempt
+Currently using an ME Annihilation Plane to break the shulker box, the
+autocrafting interface to put items in, and a formation plane to place
+it. Current theory is using a floating comparator to detect when the comparator
+get's broken by the annihilation plane breaking rather than the items being put
+it, since that should only happen when the autocraft job is done. No real theory
+on how to start it up
+** Detailed Timing Breakdown
+*** Block Event
+ 1. Redstone block in clock is moved and pulses formation plane
+    formation plane instantly places down box and updates annihilation plane
+    annihilation plane updates and schedules an update to break the box
+*** Post Tick
+ 1. Interface updates and pushes items into box
+*** Pre Tick
+ 1. Annihilation plane updates and breaks box

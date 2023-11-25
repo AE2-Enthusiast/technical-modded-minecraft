@@ -1,0 +1,49 @@
+All information applies to 1.12.2 AE2 Extended Life only
+* Tick Phases
+ - All happening within onTick event (think its called twice in a tick, and the
+   method splits to start and end on its own
+ - Each phase happens in the order written (top to bottom)
+   
+** tickColors and cable rendering modes
+ - Clientside only, start phase
+ - Updates the colors applied to players by paintballs*
+ - Updates the cable rendering mode if it doesn't match the current mode,
+   triggers proxy updates*
+   
+** Crafting Jobs
+ - World type*, end phase
+ - Updates the crafting jobs, think its processing what patterns are needed to
+   complete the job, not actually doing the crafting
+   
+** ticking
+ - Serverside only, end phase
+ - Ticks colors*
+ - Updates AE2 tiles*
+ - Ticks every grid*
+ - Processes cross world queue
+** World Synced Queues
+ - World type, start phase
+ - ticks for each dimension*, processes that world's queue
+
+* Internal Structure
+** Platform
+ - Notify Neighbors uses a world synced queue, thus sending updates at the
+   beginning of the tick
+** Duality Interface
+ - Pushes items out for crafts when updated via grid*
+ - Pulls items in when updated via grid*
+ - If it successfully did something it sets TickModulation to urgent
+ - When config changes, upgrades changes, and grid goes offline, notifies neighbors
+* Blocks
+** Interface
+ - Simple wrapper to a "DualityInterface"
+   
+** ME Chest
+ - Notifies neighbors when the cell is changed
+   
+** Parts
+*** ME Annihilation Plane
+ - When updated from the front, queue a world synced callable
+ - When called, breaks block
+ - When updated via grid, queues a world synced callable if it can break block
+ - Requires (1 + hardness + drop count) AE to break block
