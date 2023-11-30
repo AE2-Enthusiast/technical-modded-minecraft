@@ -1,0 +1,19 @@
+This project is being made for Divine Journey 2 v20.0 specifically, but will
+most likely only use vanilla and components that can easily be replace by other
+mods, ie using P2P tunnels for rf transfer could be replaced with
+cryo-stabilized fluxducts.
+
+* Overview
+This project is just for optimizing a draconic reactor to it's absolute
+limits. Also will be making pretty plots of the reactor's variables.
+
+** Background
+I feel like optimizing the reactor is pretty self explanatory honestly. It's
+dangerous and complex, so it's natural to want to optimize it. As a side note
+I've made a system that nearly perfectly optimizes the reactor using
+OpenComputers. A computer program is much better and easier way to optimize the
+reactor, but doing it in pure vanilla is cooler.
+
+* Current Attempt
+Something about PID controllers or something. I haven't thought much about this
+yet.

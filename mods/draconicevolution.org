@@ -1,0 +1,15 @@
+This file only applies to commit 5c29fe1 of Draconic Evolution (2.3.28)
+
+* TileEntities
+** Reactor
+ - max component distance is 8, ie the component can be on the eighth block from
+   the core
+ - max temperature is 10000, this isn't the actual max just the point where
+   power usage starts to become unreasonable
+ - every tick does something based off of current state
+   - can explode in basically every state
+   - Most states are self explanatory, important one is RUNNING
+*** States
+**** RUNNING
+ - 
+ - Checks block intrusions
