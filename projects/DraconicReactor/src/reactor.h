@@ -1,6 +1,11 @@
 #ifndef STONE_REACTOR_H
 #define STONE_REACTOR_H
 
+#define MAX_ERROR .01
+
+#define SIZE 10368
+#define CONVERSION_LEVEL 0
+
 #define MAX_TEMPERATURE 10000
 #define TEMP_OFFSET 444.7
 
@@ -22,28 +27,28 @@ typedef struct {
 typedef struct {
   int maxSaturation;
   double maxShieldCharge;
-  double totalFuel;
-  double fuelConversion;
+  double convertedFuel;
+  double reactableFuel;
   double reactorOutputMultiplier;
   double reactorFuelUsageMultiplier;
 } Constants;
 // The constants will be constant as long as total fuel doesn't change
 
-/*
- * The squares are stored as center points and half "radii"
- * This makes it easy to derive the center of the subdivisions by
- * adding/subtacting the half radius to the axes of the center point
- */
 typedef struct {
-  Independent center;
-  int distance; // the long awaited square radius
+  Independents position;
   double value;
-} Square;
-Dependents calculate(Independents vars, Constants constants);
-void subdivide(Square face);
+} Point;
+
+void init();
+double getValue(Dependents d);
+Dependents calculate(Independents vars);
+void subdivide(Point p1, Point p2, int ortho);
+Point avg(Point p1, Point p2);
 
 #define min(a, b)\
   a < b ? a : b
 
 #define max(a, b)\
   a > b ? a : b
+
+#endif
