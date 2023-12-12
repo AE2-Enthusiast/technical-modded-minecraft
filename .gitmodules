@@ -1,0 +1,3 @@
+[submodule "projects/DraconicReactor/src"]
+	path = projects/DraconicReactor/src
+	url = git@github.com:SamStone1000/draconic-reactor-graphing.git
