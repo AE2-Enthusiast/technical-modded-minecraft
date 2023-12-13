@@ -14,6 +14,32 @@ I've made a system that nearly perfectly optimizes the reactor using
 OpenComputers. A computer program is much better and easier way to optimize the
 reactor, but doing it in pure vanilla is cooler.
 
+* Graphing
+In an attempt to understand the reactor's behavior better, the src folder
+contains a program that attempts to graph the reactor's variables'
+changes. Currently it simply brute forces every possible temperature and
+saturation, but the new attempt is computing the stable saturation for a given
+temperature, or vice versa, because there is so many more unstable temperature
+and saturation combinations compared to stable combinations.
+** Equations
+This is each equation used by Draconic Evolution for advancing the reactor state
+in a format that's easy to use in emacs-calc or Maxima to solve or manipulate.
+
+coreSat = saturation /  maxSaturation
+negCSat = (1 - coreSat) * 99
+temp50 = min((temperature / MAX_TEMPERATURE) * 50, 99)
+tFuel = convertedFuel + reactableFuel
+convLVL = ((convertedFuel / tFuel) * 1.3) - 0.3
+tempRiseExpo = (negCSat^3) / (100 - negCSat) + TEMP_OFFSET
+tempRiseResist = (temp50^4) / (100 - temp50)
+riseAmount = (tempRiseExpo - (tempRiseResist * (1 - convLVL)) + convLVL * 1000) / 10000
+
+There's more to it, but after this temperature gets incremented mid
+calculation + the rest isn't important to solving for stable temp+sat pairs
+
+
 * Current Attempt
 Something about PID controllers or something. I haven't thought much about this
 yet.
+
+
