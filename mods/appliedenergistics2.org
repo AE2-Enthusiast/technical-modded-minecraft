@@ -40,6 +40,12 @@ All information applies to 1.12.2 AE2 Extended Life only
    
 ** ME Chest
  - Notifies neighbors when the cell is changed
+
+** ME IO Port
+ - Moves 256 units per operation
+   - 1 acceleration card *= 2 to 512 units
+   - 2 acceleration cards *= 4 to 1024 units
+   - 3 acceleration cards *= 8 to 2048 units
    
 ** Parts
 *** ME Annihilation Plane
@@ -47,3 +53,10 @@ All information applies to 1.12.2 AE2 Extended Life only
  - When called, breaks block
  - When updated via grid, queues a world synced callable if it can break block
  - Requires (1 + hardness + drop count) AE to break block
+
+*** Toggle Bus
+
+*** Inverted Toggle Bus
+ - Identical to the toggle bus, but it's connection condition is inverted
+   (literally it's just derived from the toggle bus and the only mechanical
+   difference is inverting the getIntention() method
