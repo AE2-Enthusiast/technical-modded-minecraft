@@ -33,7 +33,13 @@ All information applies to 1.12.2 AE2 Extended Life only
  - Pushes items out for crafts when updated via grid*
  - Pulls items in when updated via grid*
  - If it successfully did something it sets TickModulation to urgent
- - When config changes, upgrades changes, and grid goes offline, notifies neighbors
+ - When config changes, upgrades changes, and grid goes offline, notifies
+   neighbors
+
+** Callable Queue
+ - iterates in FIFO calling each callable in the queue
+ - Only processes the queue for 50 ms each tick, skips rest of queue but continues where
+   it left off next tick
 * Blocks
 ** Interface
  - Simple wrapper to a "DualityInterface"
@@ -46,6 +52,16 @@ All information applies to 1.12.2 AE2 Extended Life only
    - 1 acceleration card *= 2 to 512 units
    - 2 acceleration cards *= 4 to 1024 units
    - 3 acceleration cards *= 8 to 2048 units
+
+** Inscriber
+ - Takes 100 units of "work" to process one recipe
+ - Does 1 + acceleration cards units of work each tick
+ - Also has a flat 16 ticks to do the inscriber animation
+ - Total Time (ticks)
+   - 0 accel. - 116 ticks
+   - 1 accel. - 66 ticks
+   - 2 accel. - 50 ticks
+   - 3 accel. - 41 ticks
    
 ** Parts
 *** ME Annihilation Plane
@@ -55,6 +71,7 @@ All information applies to 1.12.2 AE2 Extended Life only
  - Requires (1 + hardness + drop count) AE to break block
 
 *** Toggle Bus
+ - 
 
 *** Inverted Toggle Bus
  - Identical to the toggle bus, but it's connection condition is inverted
