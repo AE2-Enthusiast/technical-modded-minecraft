@@ -19,7 +19,8 @@ All information applies to 1.12.2 AE2 Extended Life only
  - Serverside only, end phase
  - Ticks colors*
  - Updates AE2 tiles*
- - Ticks every grid*
+ - Ticks every grid
+   - Ticks in the order of a for-each loop over a HashSet ie indeterminable
  - Processes cross world queue
 ** World Synced Queues
  - World type, start phase
@@ -70,6 +71,19 @@ All information applies to 1.12.2 AE2 Extended Life only
  - When updated via grid, queues a world synced callable if it can break block
  - Requires (1 + hardness + drop count) AE to break block
 
+*** ME Formation Plane
+ - Can only "store" items if the block in front of it is "isReplacable" in Block
+   - Things like air, grass, liquids, etc. Things that can be replaced when
+     placing blocks*
+   - Check vanilla.org for specifics
+ - If it's set to block it'll attempt to place it with a fake player
+   - must be an instance of ItemBlock, ItemBlockSpecial, IPlantable, ItemSkull,
+     ItemFirework, IPartItem, or be sugarcane
+ - Otherwise it'll drop the item as an entity
+   - Checks a 17x17x17 cube for items nearby and won't drop if there's more than
+     the limit
+     - Limit can be configured in config
+       
 *** Toggle Bus
  - 
 
@@ -77,3 +91,7 @@ All information applies to 1.12.2 AE2 Extended Life only
  - Identical to the toggle bus, but it's connection condition is inverted
    (literally it's just derived from the toggle bus and the only mechanical
    difference is inverting the getIntention() method
+
+*** Level Emitter
+ - Uses Watchers to watch for changes to monitored item
+
