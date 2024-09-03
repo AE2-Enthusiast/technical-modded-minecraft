@@ -1,0 +1,40 @@
+This file applies to vanilla Minecraft 1.12.2 on Forge only
+* Misc
+** Bosses
+*** Ender Dragon
+ - The Dragon is composed of two halves, the entity itself that flys around and acts like
+   any other entity. The other half is the DragonFightManager that controls
+   global things like the health bar and the crystal count
+
+**** Ender Dragon Entity
+ - The entity is just the entity, it communicates with the manager to keep it up
+   to date with its status
+   - She has 200 health
+   - Is 16x8x16 m
+   - Has noClip
+   - Is ImmuneToFire
+   - Apparently is always rendered, iirespective of if she's on-screen, but
+     doesn't seem so in-game?
+ - 
+ - When the ender dragon is created, she'll get the dimension's
+   DragonFightManager, if the dimension is of type WorldProviderEnd
+   - Otherwise most manager stuff will be ignored
+ - Any damage that doesn't hit the dragon's head is quartered + min(damage, 1)
+**** Dragon Fight Manager
+ - The manager is a global thing for only the End (any dimension of type
+   WorldProviderEnd should have one)
+***** Tick Breakdown
+ - Every tick the manager reasserts the boss info being visible or not if the
+   dragon is alive or dead respectively
+ - Every 20 ticks the manager updates the nearby player list
+   - This counts any alive player with 192 blocks of (0, 128, 0) in the
+     dimension of the fight
+ - Every tick, if there is at least one player in the list
+   - Scans for legacy world fight, if it hasn't before
+   - Updates the Respawn Sequence, if its active
+   - If the Dragon hasn't been killed
+     - If the Dragon isn't known, or hasn't been seen for 1200 ticks (1 min)
+       - Load chunks, then select first alive dragon in the world, and make it
+         the new Dragon
+       - Otherwise, spawn a new dragon immediately, and make it the Dragon
+     - Every 100 ticks, scan for alive end crystals, and update the count
