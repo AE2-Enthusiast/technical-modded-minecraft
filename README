@@ -1,8 +1,8 @@
 A repo to store all knowledge I've gathered about the technical side of
-mods. Most of this is gather from reading the code and should be
-correct. Anything I'm not sure about or haven't looked into is marked with an
-asterik* or is simply left out.
+mods. Most of this is gathered from reading the code and should be
+correct. Anything I'm not sure about or haven't looked into (aka making
+assumptions about) is marked with an asterik* or is simply left out.
 
 mods/ contains writeups about each mod that attempts to be as comprehensive as
-possible (its only filled with what I specifically needed so its not that great)
+possible (its only filled with what I specifically needed so its not that great). Each file is named after the mod's namespace to prevent naming conflicts and help searches.
 projects/ contains writeups on projects either completed or in-progress
