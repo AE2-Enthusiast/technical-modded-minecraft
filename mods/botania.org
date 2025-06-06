@@ -1,0 +1,69 @@
+* Flowers
+** Generating
+*** Entropinnyum
+ - Every tick, if empty on mana, checks for PrimedTNT entities within 12 blocks
+   on each direction
+ - The first TNT found with a fuse of 1, that isn't dead, and isn't in liquid
+   - gets killed and adds max mana to the flower's buffer
+ - The flower holds 6500 max mana which means each TNT is worth 6500 mana
+
+* Entities
+** Mana Burst
+ - Default velocity is 0.4 m/t
+ - Bursts have 0 size
+ - Gravity (if it exists) is a constant value deducted from the velocity each tick
+ - Every tick attempts to ping the spreader that shot it
+   - Entity remembers the block pos that shot it and calls the `pingBack` method
+     on the tile there
+
+* Tile Entities
+** Mana Spreader
+*** Burst Properties
+ | Props             |   Normal | Redstone | Dreamwood |     Gaia |
+ |-------------------+----------+----------+-----------+----------|
+ | Max Mana          |      160 |      160 |       240 |      640 |
+ | Color             | 0x20FF20 | 0xFF2020 |  0xFF45C4 | 0x20FF20 |
+ | Ticks before Loss |       60 |       60 |        80 |      120 |
+ | Loss per Tick     |        4 |        4 |         4 |       20 |
+ | Motion Modifier   |        1 |        1 |      1.25 |        2 |
+
+ - Max Mana is how much mana the burst takes from the spreader
+ - Color is the color of the burst
+ - Ticks before Loss is
+ - Loss per Tick is
+ - Motion Modifier is a multiplier on the burst's velocity
+
+*** Shooting Logic
+ - Every tick
+   - If `canShootBurst` isn't set (due to existing burst)
+     - If `pingbackTicks` <= 0
+       - Searches in a box for a `IManaBurst` matching its burst
+       - If it finds one, it forces it to ping back
+       - Otherwise, sets `canShootBurst`
+     - Else
+       - It decrements `pingbackTicks`
+   - Shoots a burst if `canShootBurst` is set
+   - Bursts spawn in center of mana spreader, angled identically
+     - Seems to spawn with 1 tick of motion already applied though???
+       - Can cause bursts to clip through blocks
+
+*** General Logic
+ - When pinged, `pingBackTicks` is set to 20
+   - Meaning the mana burst can stop existing for 20 ticks before the spreader notices
+
+* Items
+** Lens
+ | Lens       | Max Mana |   TTL | Loss/t |    MM |      g |
+ |------------+----------+-------+--------+-------+--------|
+ | Efficiency |          |       |   0.2x |  1.1x |        |
+ | Gravity    |          |  1.2x |        |       | 0.0015 |
+ | Messenger  |     0.2x |    3x |        |    3x |        |
+ | Power      |       2x |       |     2x | 0.85x |        |
+ | Speed      |    0.75x |  1/3x |     2x |    2x |        |
+ | Time       |          | 2.25x |        |  0.8x |        |
+ 
+ 
+ - Lenses' effects are applied by the spreader as it creates a new burst
+ - Additionally lenses have methods that are called on collisions and every tick
+ - Lens can also control how much mana is transferred to collided objects
+ - Composite lens are applied one after the other, stacking multiplicatively
