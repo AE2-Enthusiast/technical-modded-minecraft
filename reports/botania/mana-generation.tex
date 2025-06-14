@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\title{Mana Generation}
+\author{AE2 Enthusiast}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Flowers}
+Generating flora generate mana, obviously. Most flowers have internal caps to
+how much mana they can produce. Typically, flowers simply have a hard cap to how
+much fuel they can eat or how much mana they make in a second, though some, like
+the Dandelifeon, has more obscure limitations. In either case, the limit imposed
+is lower than the maximum possible and those flowers can be ignored.
+
+The four flowers that have no real cap to their mana production are the
+Entropynnium, Rosa Arcana, Shulk-Me-Not, and Spectrolus. Technically, these
+flowers are capped by the fact that they cannot produce more mana then they
+store, but that capped mana rate is much faster then the maximum and doesn't
+matter
+
+\subsection{Entropynnum}
+The Entropynnium is simple. It eats TNT explosions and produces mana. The
+Entropynnium can eat one TNT every tick and produces it's entire internal mana
+buffer (6500) each time. The Entropynnium has a square range of 12 blocks in
+each axis, or a 25x25x25 cube.
+
+An important thing to note is that the Entropynnium is not actually eating TNT
+explosions. Instead, it is checking for Primed TNT entities nearby with a fuse
+timer of 1 that aren't in water. The Entropynnium then deletes the Primed TNT,
+produces a fake explosion effect, and produces mana. This is only important
+because it means TNT must be used to produce mana. Other sources of explosions
+like End Crystals or Creeper Statues won't work.
+
+\subsubsection{Fuel}
+Entropynniums can only eat Primed TNT entities and produce 6500 mana for
+each. Importantly, the fuel is \it{not} TNT, it's Primed TNT entities. This
+means TNT dupers can be used to fuel the entropynnium at no cost.
+.
+\section{Spreaders}
+Spreaders are arguably the most important part of mana generation. They're the
+only method of getting mana out of flowers and are generally the bottleneck for
+maximizing generation rates. For a brief overview, spreaders work by shooting a
+single mana burst at a target. The burst has to physically move to the target
+until it collides and the spreader can shoot another.
+
+Since a spreader's limit is the fact it must wait for it's burst to reach the
+target before 
+\end{document}
