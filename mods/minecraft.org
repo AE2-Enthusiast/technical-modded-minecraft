@@ -38,3 +38,9 @@ This file applies to vanilla Minecraft 1.12.2 on Forge only
          the new Dragon
        - Otherwise, spawn a new dragon immediately, and make it the Dragon
      - Every 100 ticks, scan for alive end crystals, and update the count
+
+* Entities
+** Projectiles
+*** Arrow
+ - Default damage is 2
+ - Damage is multiplied by the arrow's velocity directly
