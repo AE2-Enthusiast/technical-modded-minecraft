@@ -1,0 +1,4 @@
+* Mechanics
+** Lasers
+ - deal 1 point of damage per 1000 J in the beam
+ - 

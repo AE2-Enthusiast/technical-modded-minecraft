@@ -1,0 +1,12 @@
+* Tile Entities
+** Hellfire Forge
+ - Takes 100 ticks per recipe
+
+* Rituals
+** Well of Suffering
+ - Mobs make 25 LP per hit by default
+   - Can be overriden by config per mob type
+
+* Items
+** Demon Will Crystals
+ - Worth 50 will

@@ -1,6 +1,19 @@
 This file only applies to commit 5c29fe1 of Draconic Evolution (2.3.28)
 
 * TileEntities
+** Crafting Injector
+ - Takes at least `chargeSpeedModifier` ticks to fully charge
+   - The RF/t input on each injector is limited to \(\mathtext{RF Cost} * \frac{1}{\mathtext{chargeSpeedModifier}}\)
+ -
+| Name     | Tier | `chargeSpeedModifier` |
+|----------+------+-----------------------|
+| Basic    |    0 |                   300 |
+| Wyvern   |    1 |                   220 |
+| Draconic |    2 |                   140 |
+| Chaotic  |    3 |                    60 |
+
+     
+
 ** Reactor
  - max component distance is 8, ie the component can be on the eighth block from
    the core

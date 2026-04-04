@@ -1,0 +1,31 @@
+#+STARTUP: latexpreview
+* Entities
+** Flux Rift
+ - Max size from natural growth is 100
+ - But size when spawned from too much flux is \(\sqrt{flux * 3}\)
+ - When collapsed via a causaulity collapser, a rift drops
+   - \(\frac{\sqrt{size}}{100}\) Primordial Pearls
+   - \(\sqrt{size}\) Void Seeds
+* Tile Entities
+** Essentia Smeltery
+ - Alumentum multiplies time between slurry processings by 0.8x
+ - The time to smelt an item is 2 ticks per point of essentia in an item being smelted
+   - That time is reduced by 0.125x for each bellows affecting the smeltery
+     (multiplied by 1 - 0.125n, where n is number of bellows)
+   - Bellows only affect the smeltery when attached to the 3 sides in the xz
+     plane (horizontally) that aren't the front
+ - Efficency is the chance for each point of essentia to be lost as flux when the
+   item is smelted
+   - Vitium essentia multiplies efficency by 0.66x instead
+ - The Smeltery can store up to 256 points of essentia slurry
+   - The Smeltery won't smelt an item if it'd cause it to have more than that
+     much essentia slurry
+   - As a consequence, it can never smelt any item with more than 256 essentia
+| Type     | Speed (t) | Efficiency |
+|----------+-----------+------------|
+| Basic    |        15 |        0.8 |
+| Thaumium |        10 |        0.9 |
+| Void     |        15 |       0.95 |
+
+** Jar
+ - stores 250 essentia

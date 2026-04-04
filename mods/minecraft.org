@@ -1,4 +1,29 @@
+#+STARTUP: latexpreview
 This file applies to vanilla Minecraft 1.12.2 on Forge only
+* Blocks
+** Crops
+ - On a random tick
+   - Grows only if the light in the block above the crop is above or equal to 9
+   - Has a growth chance based on the 3x3 of farmland below the crop
+     - If the farmland is fertile, it's worth 3 points, otherwise 1
+       - The 8 farmland not directly below the crop are divided by 4, additionally
+     - Once added up,
+       - Points are halved if crops are not in rows, where rows is defined as,
+         - Having the same type of crop block on any two ortogonal cardinal directions
+         - Or having the same type of crop block on any of the 4 diagonals
+     - The final growth chance is \(\frac{1}{(25 / points) + 1}\)
+ - Bonemeal increases growth by 2-5 stages, equally distributed (beet root at
+   least is different btw)
+** Leaves
+ - Split into BlockLeaves (abstract), BlockOldLeaf, and BlockNewLeaf
+   - New and Old are assumedly identical aside from old being for oak, spruce,
+     birch, and jungle, and new being for acacia and dark oak.
+ - Meta is splt into <`CHECK_DECAY`>, <`!DECAYABLE`>, <wood variant>, <wood variant>
+* Entities
+** Projectiles
+*** Arrow
+ - Default damage is 2
+ - Damage is multiplied by the arrow's velocity directly
 * Misc
 ** Bosses
 *** Ender Dragon
@@ -38,9 +63,3 @@ This file applies to vanilla Minecraft 1.12.2 on Forge only
          the new Dragon
        - Otherwise, spawn a new dragon immediately, and make it the Dragon
      - Every 100 ticks, scan for alive end crystals, and update the count
-
-* Entities
-** Projectiles
-*** Arrow
- - Default damage is 2
- - Damage is multiplied by the arrow's velocity directly

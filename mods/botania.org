@@ -15,55 +15,174 @@
  - Every tick attempts to ping the spreader that shot it
    - Entity remembers the block pos that shot it and calls the `pingBack` method
      on the tile there
+ - Is intangible for it's first tick of life for an unknown reason (maybe a
+   Vanilla thing?)
+
+** Mana Pool in a Minecart
+ - Transfers 10,000 mana/t
+ - Transfer is per minecart per pump connection, not just per pump
+   - Stacking carts allows more than 10,000 mana/t to be transferred in the same
+     block space
+
+** Mana Storm
+ - Fires 250 total bursts
+ - Each burst contains 120 mana
+ - Fires 1 burst every \(30 - \frac{t}{45}\)
+ - Takes 200 ticks to die after firing all it's bursts
+
 
 * Tile Entities
+** Elven Portal
+ - Does a recipe every 4 ticks
+   - 4 tick timer resets when an item is input into the portal
+ - Every tick consumes every item entity in it's bounding box and adds them to
+   the list
+
+** Mana Pool
+ - Transfers \(1000 * (n_b + 1)\) mana/t into items where \(n_b\) is the bellow
+   count
 ** Mana Spreader
 *** Burst Properties
- | Props             |   Normal | Redstone | Dreamwood |     Gaia |
- |-------------------+----------+----------+-----------+----------|
- | Max Mana          |      160 |      160 |       240 |      640 |
- | Color             | 0x20FF20 | 0xFF2020 |  0xFF45C4 | 0x20FF20 |
- | Ticks before Loss |       60 |       60 |        80 |      120 |
- | Loss per Tick     |        4 |        4 |         4 |       20 |
- | Motion Modifier   |        1 |        1 |      1.25 |        2 |
+| Props             |   Normal | Redstone | Dreamwood |     Gaia |
+|-------------------+----------+----------+-----------+----------|
+| Max Mana          |      160 |      160 |       240 |      640 |
+| Color             | 0x20FF20 | 0xFF2020 |  0xFF45C4 | 0x20FF20 |
+| Ticks before Loss |       60 |       60 |        80 |      120 |
+| Loss per Tick     |        4 |        4 |         4 |       20 |
+| Motion Modifier   |        1 |        1 |      1.25 |        2 |
 
- - Max Mana is how much mana the burst takes from the spreader
- - Color is the color of the burst
- - Ticks before Loss is
- - Loss per Tick is
- - Motion Modifier is a multiplier on the burst's velocity
+- Max Mana is how much mana the burst takes from the spreader
+- Color is the color of the burst
+- Ticks before Loss is
+- Loss per Tick is
+- Motion Modifier is a multiplier on the burst's velocity
 
 *** Shooting Logic
- - Every tick
-   - If `canShootBurst` isn't set (due to existing burst)
-     - If `pingbackTicks` <= 0
-       - Searches in a box for a `IManaBurst` matching its burst
-       - If it finds one, it forces it to ping back
-       - Otherwise, sets `canShootBurst`
-     - Else
-       - It decrements `pingbackTicks`
-   - Shoots a burst if `canShootBurst` is set
-   - Bursts spawn in center of mana spreader, angled identically
-     - Seems to spawn with 1 tick of motion already applied though???
-       - Can cause bursts to clip through blocks
+- Every tick
+  - If `canShootBurst` isn't set (due to existing burst)
+    - If `pingbackTicks` <= 0
+      - Searches in a box for a `IManaBurst` matching its burst
+      - If it finds one, it forces it to ping back
+      - Otherwise, sets `canShootBurst`
+    - Else
+      - It decrements `pingbackTicks`
+  - Shoots a burst if `canShootBurst` is set
+  - Bursts spawn in center of mana spreader, angled identically
+    - Seems to spawn with 1 tick of motion already applied though???
+      - Can cause bursts to clip through blocks
 
 *** General Logic
- - When pinged, `pingBackTicks` is set to 20
-   - Meaning the mana burst can stop existing for 20 ticks before the spreader notices
+- When pinged, `pingBackTicks` is set to 20
+  - Meaning the mana burst can stop existing for 20 ticks before the spreader notices
 
 * Items
 ** Lens
- | Lens       | Max Mana |   TTL | Loss/t |    MM |      g |
- |------------+----------+-------+--------+-------+--------|
- | Efficiency |          |       |   0.2x |  1.1x |        |
- | Gravity    |          |  1.2x |        |       | 0.0015 |
- | Messenger  |     0.2x |    3x |        |    3x |        |
- | Power      |       2x |       |     2x | 0.85x |        |
- | Speed      |    0.75x |  1/3x |     2x |    2x |        |
- | Time       |          | 2.25x |        |  0.8x |        |
+| Lens       | Max Mana |   TTL | Loss/t |    MM |      g |
+|------------+----------+-------+--------+-------+--------|
+| Efficiency |          |       |   0.2x |  1.1x |        |
+| Gravity    |          |  1.2x |        |       | 0.0015 |
+| Messenger  |     0.2x |    3x |        |    3x |        |
+| Power      |       2x |       |     2x | 0.85x |        |
+| Speed      |    0.75x |  1/3x |     2x |    2x |        |
+| Time       |          | 2.25x |        |  0.8x |        |
  
  
- - Lenses' effects are applied by the spreader as it creates a new burst
- - Additionally lenses have methods that are called on collisions and every tick
- - Lens can also control how much mana is transferred to collided objects
- - Composite lens are applied one after the other, stacking multiplicatively
+- Lenses' effects are applied by the spreader as it creates a new burst
+- Additionally lenses have methods that are called on collisions and every tick
+- Lens can also control how much mana is transferred to collided objects
+- Composite lens are applied one after the other, stacking multiplicatively
+
+** Terra Shatterer
+| Rank | Minimum Mana Requirement |
+|------+--------------------------|
+| D    | 0                        |
+| C    | 10,000                   |
+| B    | 1,000,000                |
+| A    | 10,000,000               |
+| S    | 100,000,000              |
+| SS   | 1,000,000,000            |
+
+* Recipes
+** Mana Infusion
+| From                 | To                 | Cost (Mana) |
+|----------------------+--------------------+-------------|
+| "ingotIron"          | Manasteel          |        3000 |
+| Iron Block           | Manasteel Block    |       27000 |
+| Ender Pearl          | Mana Pearl         |        6000 |
+| "gemDiamond"         | Mana Diamond       |       10000 |
+| Diamond Block        | Mana Diamond Block |       90000 |
+| Gunpowder/Redstone/  |                    |             |
+| Glowstone Dust/Sugar | Mana Powder        |         500 |
+| Petal Powder         | Mana Powder        |         400 |
+| Piston Relay         | Piston             |       15000 |
+| Mana Cookie          | Cookie             |       20000 |
+| Tall Grass           | Pasture Seed       |        2500 |
+| Deadbush             | Pasture Seed:1     |        2500 |
+| Red/Brown Mushroom   | Mycelial Spore     |        6500 |
+| Quartz               | Mana Quartz        |         250 |
+| Potato               | Tiny Potato        |        1337 |
+| Glass                | Mana Glass         |         150 |
+| String               | Mana String        |        5000 |
+| Glass Bottle         | Mana Bottle        |        5000 |
+
+*** Alchemy Catalyst
+| From                     | To                       | Cost (Mana) |
+|--------------------------+--------------------------+-------------|
+| Rotten Flesh             | Leather                  |         600 |
+| Log                      | Log + 1                  |          40 |
+| Sapling                  | Sapling + 1              |         120 |
+| Glowstone                | Glowstone Dust           |          25 |
+| <any> Quartz Block       | 4x <any> Quartz          |          25 |
+| Stone Brick              | Chiseled Stone Brick?    |         150 |
+| Snow                     | Ice                      |        2250 |
+| Vine/Waterlily           | Waterlily/Vine           |         320 |
+| Fish                     | Fish + 1                 |         200 |
+| Crop Cycle?              |                          |        6000 |
+| Poisonous Potato         | Potato                   |        1200 |
+| Blaze Rod                | Nether Wart              |        4000 |
+| Gunpowder/Flint          | Flint/Gunpowder          |         200 |
+| Writable Book            | Name Tag                 |       16000 |
+| <any> Wool               | 4x String                |         100 |
+| Cactus/Slime Ball        | Slime Ball/Cactus        |        1200 |
+| Ghast Tear               | Ender Pearl              |       28000 |
+| Glowstone Dust/Redstone  | Redstone/Glowstone Dust  |         300 |
+| Cobblestone              | Sand                     |          50 |
+| Terracotta               | Red Sand                 |          50 |
+| Clay                     | 4x Clay Ball             |          25 |
+| Brick Block              | 4x Brick                 |          25 |
+| Dirt                     | Coarse Dirt?             |         120 |
+| Stone                    | Andesite                 |         200 |
+| Stone                    | Stone - 2 (1)            |         200 |
+| Tallgrass/Deadbush/Grass | Deadbush/Grass/Tallgrass |         500 |
+| Flower Cycle             |                          |         400 |
+| Popped Chorus Fruit      | Chorus Flower            |       10000 |
+
+*** Conjuration Catalyst
+| Conjured Item  | Cost (Mana) |
+|----------------+-------------|
+| Redstone       |        5000 |
+| Glowstone Dust |        5000 |
+| Quartz         |        2500 |
+| Coal           |        2100 |
+| Snowball       |         200 |
+| Netherrack     |         200 |
+| Soul Sand      |        1500 |
+| Gravel         |         720 |
+| <any> Leaves   |        2000 |
+| Grass          |         800 |
+
+** Runic Altar
+| Tier | Cost (Mana) |
+|------+-------------|
+|    1 |        5200 |
+|    2 |        8000 |
+|    3 |       12000 |
+ - Recipe for a player head costs 22500 mana
+
+** Elven Portal
+ - Takes 60 ticks to open
+ - Consumes 200000 mana to open
+ - Every trade costs 500 mana
+   - Cost is hardcoded as part of the elven portal itself, so doubtful any
+     modpack will change this
+

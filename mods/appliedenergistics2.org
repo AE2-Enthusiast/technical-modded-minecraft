@@ -31,30 +31,66 @@ All information applies to 1.12.2 AE2 Extended Life only
  - Notify Neighbors uses a world synced queue, thus sending updates at the
    beginning of the tick
 ** Duality Interface
+*** Item
  - Pushes items out for crafts when updated via grid*
  - Pulls items in when updated via grid*
  - If it successfully did something it sets TickModulation to urgent
  - When config changes, upgrades changes, and grid goes offline, notifies
    neighbors
 
+*** Fluid
+ - 9 tanks
+ - Initial capacity 4 B
+ - Capcity is \(4^{U_c + 1}\) where \(U_c\) is the capacity card count
+ - Max of 2 capacity cards
+ - Same tick rate as interfaces
+
 ** Callable Queue
  - iterates in FIFO calling each callable in the queue
  - Only processes the queue for 50 ms each tick, skips rest of queue but continues where
    it left off next tick
+
+** Ticking Queue
+ - Parts and such aren't ticked via Minecraft's default system because
+   Minecraft's ticks every tick and can't stop ticking
+| Device                | Min | Max |
+|-----------------------+-----+-----|
+| Interface             |   5 | 120 |
+| Import Bus            |   5 |  40 |
+| Fluid Import Bus      |   5 |  40 |
+| Export Bus            |   5 |  60 |
+| Fluid Export Bus      |   5 |  60 |
+| Annihilation Plane    |   2 | 120 |
+| ME Tunnel             |   5 |  20 |
+| Inscriber             |   1 |   1 |
+| Charger               |  10 | 120 |
+| IO Port               |   1 |   5 |
+| Vibration Chamber     |  10 |  40 |
+| Storage Bus           |   5 |  60 |
+| Item Tunnel           |   5 |  60 |
+| Light Tunnel          |   5 |  60 |
+| Open Computers Tunnel |   1 |   5 |
+| Pressure Tunnel       |   1 | 120 |
+
 * Blocks
 ** Interface
  - Simple wrapper to a "DualityInterface"
    
 ** ME Chest
  - Notifies neighbors when the cell is changed
+ - Has 1 slot for items to be input in
+ - Front face acess the cell's slot
+ - Every face except the front accesses the slot to input items
 
 ** ME IO Port
+ - Default tick rate's between 1 and 5
  - Moves 256 units per operation
    - 1 acceleration card *= 2 to 512 units
    - 2 acceleration cards *= 4 to 1024 units
    - 3 acceleration cards *= 8 to 2048 units
 
 ** Inscriber
+ - Default tick rate's between 1 and 1
  - Takes 100 units of "work" to process one recipe
  - Does 1 + acceleration cards units of work each tick
  - Also has a flat 16 ticks to do the inscriber animation
@@ -63,15 +99,15 @@ All information applies to 1.12.2 AE2 Extended Life only
    - 1 accel. - 66 ticks
    - 2 accel. - 50 ticks
    - 3 accel. - 41 ticks
-   
+
 ** Parts
-*** ME Annihilation Plane
+*** Annihilation Plane
  - When updated from the front, queue a world synced callable
  - When called, breaks block
  - When updated via grid, queues a world synced callable if it can break block
  - Requires (1 + hardness + drop count) AE to break block
 
-*** ME Formation Plane
+*** Formation Plane
  - Can only "store" items if the block in front of it is "isReplacable" in Block
    - Things like air, grass, liquids, etc. Things that can be replaced when
      placing blocks*
@@ -83,6 +119,9 @@ All information applies to 1.12.2 AE2 Extended Life only
    - Checks a 17x17x17 cube for items nearby and won't drop if there's more than
      the limit
      - Limit can be configured in config
+*** P2Ps
+**** Redstone P2P
+ - sends 
        
 *** Toggle Bus
  - 
