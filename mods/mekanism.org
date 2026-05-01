@@ -1,4 +1,11 @@
 * Mechanics
 ** Lasers
- - deal 1 point of damage per 1000 J in the beam
- - 
+ - Given \(E\) as energy in the laser beam in Joules
+ - For each entity in the laser's hurtbox
+   - if not immune to fire,
+     - Set's entity on fire for \(\frac{E}{1000}\) ticks
+   - If more than 256 J,
+     - Deal \(\frac{E}{1000} damage
+
+** Energy
+ 

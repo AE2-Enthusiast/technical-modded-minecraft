@@ -1,0 +1,20 @@
+# This comes from a friend's modpack I've been playing, but I assume the values
+# are all vanilla
+
+| Material  | Passive | Active (Fission) | Active (Fusion) |
+|-----------+---------+------------------+-----------------|
+| Water     |      60 | 150              | 200             |
+| Redstone  |      90 | 3,200            | 12,800          |
+| Quartz    |      90 | 3,000            | 12,000          |
+| Gold      |     120 | 4,800            | 19,200          |
+| Glowstone |     130 | 4,000            | 16,000          |
+| Lapis     |     120 | 2,800            | 11,200          |
+| Diamond   |     150 | 7,000            | 28,000          |
+| Helium    |     140 | 6,600            | 26,400          |
+| Enderium  |     120 | 5,400            | 21,600          |
+| Cryotheum |     160 | 6,400            | 25,600          |
+| Iron      |      80 | 2,400            | 9,600           |
+| Emerald   |     160 | 3,600            | 14,400          |
+| Copper    |      80 | 2,600            | 10,400          |
+| Tin       |     120 | 3,000            | 12,000          |
+| Magnesium |     110 | 3,600            | 14,400          |
